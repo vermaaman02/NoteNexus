@@ -7,7 +7,7 @@ import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import Dashboard from './pages/Dashboard.jsx';
-import Upload from './pages/Upload.jsx';
+import UploadPage from './pages/Upload.jsx';
 import Profile from './pages/Profile.jsx';
 import NoteDetail from './pages/NoteDetail.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -37,7 +37,7 @@ function App() {
                 path="/upload"
                 element={
                   <ProtectedRoute>
-                    <Upload />
+                    <UploadPage />
                   </ProtectedRoute>
                 }
               />

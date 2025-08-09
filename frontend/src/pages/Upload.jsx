@@ -267,7 +267,7 @@ const ErrorMessage = styled.div`
   margin-top: 0.25rem;
 `;
 
-const Upload = () => {
+const UploadPage = () => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -568,4 +568,4 @@ const Upload = () => {
   );
 };
 
-export default Upload;
+export default UploadPage;
