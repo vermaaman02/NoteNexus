@@ -12,8 +12,10 @@ const app = express();
 // Middleware
 app.use(cors({
   origin: [
-    'http://localhost:3000',
-    'https://your-vercel-app.vercel.app' // Replace with your actual Vercel URL
+    'http://localhost:3000', // For local development
+    'https://notenexus-frontend.azurestaticapps.net', // Azure Static Web App
+    'https://thankful-field-*.azurestaticapps.net', // Azure auto-generated URLs
+    'https://*.azurestaticapps.net' // Allow all Azure Static Web Apps domains
   ],
   credentials: true
 }));
