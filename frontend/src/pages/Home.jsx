@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { notesService } from '../services/api';
-import { Search, Filter, Download, Heart, Eye } from 'lucide-react';
+import { Search, Download, Eye } from 'lucide-react';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 
@@ -239,7 +239,7 @@ const Home = () => {
     total: 0
   });
 
-  const fetchNotes = async (page = 1) => {
+  const fetchNotes = useCallback(async (page = 1) => {
     setLoading(true);
     try {
       const params = {
@@ -264,11 +264,11 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, filters]);
 
   useEffect(() => {
     fetchNotes();
-  }, []);
+  }, [fetchNotes]);
 
   const handleSearch = () => {
     fetchNotes(1);

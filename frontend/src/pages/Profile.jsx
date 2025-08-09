@@ -9,11 +9,7 @@ import {
   Calendar,
   Edit3,
   Save,
-  X,
-  FileText,
-  Download,
-  Heart,
-  Bookmark
+  X
 } from 'lucide-react';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';

@@ -18,7 +18,9 @@ const Container = styled.div`
 `;
 
 const UploadCard = styled.div`
-  background: white;
+  background                    <UploadIcon>
+                      <Upload size={48} />
+                    </UploadIcon>hite;
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -150,7 +152,7 @@ const FileInput = styled.input`
   display: none;
 `;
 
-const UploadIcon_ = styled.div`
+const UploadIcon = styled.div`
   width: 60px;
   height: 60px;
   margin: 0 auto 1rem;

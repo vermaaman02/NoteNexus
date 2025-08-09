@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { notesService, userService } from '../services/api.js';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -217,14 +217,6 @@ const ActionButton = styled.button`
   }
 `;
 
-const StatsContainer = styled.div`
-  display: flex;
-  gap: 2rem;
-  margin-top: 1rem;
-  color: #666;
-  font-size: 0.9rem;
-`;
-
 const UploaderInfo = styled.div`
   background: #f8fafc;
   padding: 1.5rem;
@@ -278,11 +270,7 @@ const NoteDetail = () => {
   const [saved, setSaved] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
 
-  useEffect(() => {
-    fetchNoteDetails();
-  }, [id]);
-
-  const fetchNoteDetails = async () => {
+  const fetchNoteDetails = useCallback(async () => {
     setLoading(true);
     try {
       const response = await notesService.getNoteById(id);
@@ -299,7 +287,11 @@ const NoteDetail = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, isAuthenticated, user]);
+
+  useEffect(() => {
+    fetchNoteDetails();
+  }, [fetchNoteDetails]);
 
   const handleDownload = async () => {
     try {
