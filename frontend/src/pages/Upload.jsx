@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { notesService } from '../services/api.js';
-import { Upload as UploadIcon, FileText, X, Plus } from 'lucide-react';
+import { Upload, FileText, X, Plus } from 'lucide-react';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 
@@ -152,7 +152,7 @@ const FileInput = styled.input`
   display: none;
 `;
 
-const UploadIcon = styled.div`
+const UploadIconContainer = styled.div`
   width: 60px;
   height: 60px;
   margin: 0 auto 1rem;
@@ -547,9 +547,9 @@ const Upload = () => {
                   </FileInfo>
                 ) : (
                   <>
-                    <UploadIcon_>
-                      <UploadIcon size={24} />
-                    </UploadIcon_>
+                    <UploadIconContainer>
+                      <Upload size={48} />
+                    </UploadIconContainer>
                     <h3>Click to upload or drag and drop</h3>
                     <p>PDF, DOC, DOCX, PPT, PPTX, TXT, or image files (max 10MB)</p>
                   </>
