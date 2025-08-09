@@ -16,6 +16,7 @@ app.use(cors({
     'https://notenexus.vercel.app', // Your Vercel deployment URLs
     'https://note-nexus.vercel.app',
     'https://notenexus-frontend.vercel.app',
+    'https://frontend-cil5gigld-aman-vermas-projects-eb493b68.vercel.app', // Current deployment
     'https://*.vercel.app' // Allow all Vercel domains
   ],
   credentials: true
