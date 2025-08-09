@@ -1,17 +1,103 @@
-# Node
+# Dependencies
 node_modules/
-dist/
-build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables (IMPORTANT - protects your database credentials)
 .env
-uploads/
-.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+frontend/.env
+
+# Production builds
+build/
+dist/
+frontend/build/
+backend/dist/
+
+# Logs
+logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Vite
-client/dist/
+# Uploaded files (protect user uploads)
+uploads/
+backend/uploads/*
+!backend/uploads/.gitkeep
 
-# VSCode
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+coverage/
+.nyc_output
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Editor directories and files
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# OS
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+
+# Build files
+*.tgz
+*.tar.gz
+
+# Eslint cache
+.eslintcache
+
+# Next.js build output
+.next
+
+# Nuxt.js build output
+.nuxt
+
+# Parcel cache
+.cache
+.parcel-cache
+
+# Serverless directories
+.serverless
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
