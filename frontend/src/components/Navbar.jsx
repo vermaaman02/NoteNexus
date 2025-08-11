@@ -5,9 +5,9 @@ import { BookOpen, Upload, User, LogOut, Home, Menu } from 'lucide-react';
 import styled from 'styled-components';
 
 const NavbarContainer = styled.nav`
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1976D2 0%, #9C27B0 100%);
   padding: 1rem 0;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
   position: sticky;
   top: 0;
   z-index: 1000;

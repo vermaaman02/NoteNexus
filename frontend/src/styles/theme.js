@@ -1,16 +1,16 @@
 // Comprehensive theme system for NoteNexus
 export const theme = {
-  // Colors - Consistent dark theme with gradients
+  // Colors - Bold and attractive theme with Blue 600 and Purple 500
   colors: {
     primary: {
-      main: '#667eea',
-      light: '#a5b4fc',
-      dark: '#5a67d8'
+      main: '#1976D2', // Blue 600
+      light: '#42A5F5', // Blue 400
+      dark: '#0D47A1' // Blue 900
     },
     secondary: {
-      main: '#764ba2',
-      light: '#9f7aea',
-      dark: '#553c9a'
+      main: '#9C27B0', // Purple 500
+      light: '#BA68C8', // Purple 300
+      dark: '#7B1FA2' // Purple 700
     },
     accent: {
       main: '#f093fb',
@@ -33,18 +33,18 @@ export const theme = {
     border: {
       light: 'rgba(255, 255, 255, 0.1)',
       medium: 'rgba(255, 255, 255, 0.2)',
-      focus: '#667eea'
+      focus: '#1976D2'
     }
   },
 
   // Gradients
   gradients: {
-    primary: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    secondary: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+    primary: 'linear-gradient(135deg, #1976D2 0%, #9C27B0 100%)',
+    secondary: 'linear-gradient(135deg, #BA68C8 0%, #42A5F5 100%)',
     background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d1b69 100%)',
     backgroundAlt: 'linear-gradient(135deg, #1a1a3e 0%, #0f0f23 100%)',
     text: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)',
-    logoIcon: 'linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%)'
+    logoIcon: 'linear-gradient(45deg, #1976D2 0%, #9C27B0 50%, #BA68C8 100%)'
   },
 
   // Typography
@@ -122,8 +122,8 @@ export const theme = {
     md: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
     lg: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
     xl: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-    primary: '0 8px 25px rgba(102, 126, 234, 0.3)',
-    primaryHover: '0 12px 40px rgba(102, 126, 234, 0.4)',
+    primary: '0 8px 25px rgba(25, 118, 210, 0.3)',
+    primaryHover: '0 12px 40px rgba(25, 118, 210, 0.4)',
     card: '0 20px 40px rgba(0, 0, 0, 0.3)'
   },
 
