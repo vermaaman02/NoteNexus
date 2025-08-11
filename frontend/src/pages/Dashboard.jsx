@@ -281,15 +281,26 @@ const Dashboard = () => {
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
+      console.log('Fetching dashboard data...');
       const [statsResponse, notesResponse] = await Promise.all([
         userService.getStats(),
         notesService.getUserNotes()
       ]);
 
+      console.log('Stats response:', statsResponse.data);
+      console.log('Notes response:', notesResponse.data);
+
       setStats(statsResponse.data.stats);
       setRecentNotes(notesResponse.data.notes.slice(0, 6)); // Show only recent 6
     } catch (error) {
-      toast.error('Failed to load dashboard data');
+      console.error('Dashboard data fetch error:', error);
+      console.error('Error response:', error.response?.data);
+      
+      if (error.response?.status === 401) {
+        toast.error('Please login again to access dashboard');
+      } else {
+        toast.error(`Failed to load dashboard data: ${error.response?.data?.message || error.message}`);
+      }
     } finally {
       setLoading(false);
     }

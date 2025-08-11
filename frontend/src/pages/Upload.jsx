@@ -391,9 +391,22 @@ const UploadPage = () => {
       navigate('/dashboard');
     } catch (error) {
       console.error('Upload error:', error);
-      const errorMessage = error.response?.data?.message || 
-                          error.response?.data?.errors || 
-                          'Failed to upload note. Please try again.';
+      console.error('Upload error response:', error.response?.data);
+      
+      let errorMessage = 'Failed to upload note. Please try again.';
+      
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.data?.errors) {
+        errorMessage = error.response.data.errors;
+      } else if (error.response?.status === 401) {
+        errorMessage = 'Please login again to upload notes';
+      } else if (error.response?.status === 413) {
+        errorMessage = 'File size too large. Please use a smaller file (max 10MB)';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);
