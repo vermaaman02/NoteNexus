@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 const LoginContainer = styled.div`
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: #0f0f23;
   display: flex;
   font-family: 'Inter', sans-serif;
 `;
@@ -16,11 +16,15 @@ const LeftPanel = styled.div`
   flex: 1;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 60px;
+  padding: 40px;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
+
+  @media (min-width: 768px) {
+    padding: 60px;
+  }
 
   &::before {
     content: '';
@@ -42,11 +46,17 @@ const RightPanel = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: 20px;
+  background: #0f0f23;
+  
+  @media (min-width: 768px) {
+    padding: 40px;
+  }
   
   @media (max-width: 768px) {
     flex: none;
     width: 100%;
+    min-height: 100vh;
   }
 `;
 
@@ -126,36 +136,61 @@ const FeatureDescription = styled.p`
 `;
 
 const LoginCard = styled.div`
-  background: white;
-  padding: 48px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 32px;
   border-radius: 24px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
   width: 100%;
   max-width: 460px;
+  color: white;
+
+  @media (min-width: 768px) {
+    padding: 48px;
+  }
 `;
 
 const LoginHeader = styled.div`
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
+
+  @media (min-width: 768px) {
+    margin-bottom: 40px;
+  }
 `;
 
 const LoginTitle = styled.h2`
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  color: #1a202c;
+  color: white;
   margin-bottom: 8px;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @media (min-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const LoginSubtitle = styled.p`
-  color: #6b7280;
-  font-size: 1rem;
+  color: #94a3b8;
+  font-size: 0.95rem;
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
+
+  @media (min-width: 768px) {
+    gap: 24px;
+  }
 `;
 
 const InputGroup = styled.div`
@@ -165,7 +200,7 @@ const InputGroup = styled.div`
 const Label = styled.label`
   display: block;
   font-weight: 600;
-  color: #374151;
+  color: #e2e8f0;
   margin-bottom: 8px;
   font-size: 14px;
 `;
@@ -179,26 +214,36 @@ const InputIcon = styled.div`
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: #a0aec0;
+  color: #94a3b8;
   z-index: 10;
   transition: color 0.3s ease;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 16px 16px 16px 48px;
-  border: 2px solid #e2e8f0;
+  padding: 14px 14px 14px 44px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   font-size: 16px;
   transition: all 0.3s ease;
-  background: white;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
   font-family: 'Inter', sans-serif;
+
+  @media (min-width: 768px) {
+    padding: 16px 16px 16px 48px;
+  }
+
+  &::placeholder {
+    color: #64748b;
+  }
 
   &:focus {
     outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
     transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   &:focus + ${InputIcon} {
@@ -208,14 +253,18 @@ const Input = styled.input`
 
 const PasswordToggle = styled.button`
   position: absolute;
-  right: 16px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  color: #a0aec0;
+  color: #94a3b8;
   transition: color 0.3s ease;
+
+  @media (min-width: 768px) {
+    right: 16px;
+  }
 
   &:hover {
     color: #667eea;
@@ -226,7 +275,7 @@ const SubmitButton = styled.button`
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border: none;
   color: white;
-  padding: 16px 28px;
+  padding: 14px 24px;
   border-radius: 12px;
   font-weight: 600;
   font-size: 16px;
@@ -235,6 +284,10 @@ const SubmitButton = styled.button`
   box-shadow: 0 4px 14px 0 rgba(102, 126, 234, 0.25);
   position: relative;
   overflow: hidden;
+
+  @media (min-width: 768px) {
+    padding: 16px 28px;
+  }
 
   &:hover {
     transform: translateY(-2px);
@@ -270,9 +323,14 @@ const LoadingSpinner = styled.div`
 
 const LinkText = styled.p`
   text-align: center;
-  margin-top: 24px;
-  color: #6b7280;
-  font-size: 16px;
+  margin-top: 20px;
+  color: #94a3b8;
+  font-size: 15px;
+
+  @media (min-width: 768px) {
+    margin-top: 24px;
+    font-size: 16px;
+  }
 
   a {
     color: #667eea;
@@ -288,23 +346,31 @@ const LinkText = styled.p`
 
 const MobileFeatures = styled.div`
   display: none;
-  margin-top: 32px;
-  gap: 16px;
+  margin-top: 24px;
+  gap: 12px;
 
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
+    margin-top: 32px;
+    gap: 16px;
   }
 `;
 
 const MobileFeature = styled.div`
-  background: white;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px;
   border-radius: 16px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    gap: 16px;
+  }
 `;
 
 const Login = () => {

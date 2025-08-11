@@ -1,12 +1,55 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Users, Target, Heart, Award, Globe, ArrowLeft } from 'lucide-react';
+import { BookOpen, Users, ArrowLeft, Share, Download, Heart } from 'lucide-react';
 import styled from 'styled-components';
+
+// Responsive theme system
+const theme = {
+  colors: {
+    background: {
+      primary: '#0f0f23',
+      secondary: '#1a1a2e',
+      card: '#16213e'
+    },
+    text: {
+      primary: '#ffffff',
+      secondary: '#e2e8f0',
+      muted: '#94a3b8'
+    },
+    primary: '#8b5cf6',
+    secondary: '#06b6d4',
+    accent: '#f59e0b',
+    border: '#374151'
+  },
+  gradients: {
+    primary: 'linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%)',
+    secondary: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)'
+  },
+  breakpoints: {
+    sm: '640px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1280px'
+  },
+  borderRadius: {
+    sm: '0.25rem',
+    md: '0.375rem',
+    lg: '0.5rem',
+    xl: '0.75rem'
+  },
+  shadows: {
+    lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+    xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+  },
+  transitions: {
+    default: '0.3s ease'
+  }
+};
 
 const AboutContainer = styled.div`
   min-height: 100vh;
-  background: #0f0f23;
-  color: white;
+  background: ${theme.colors.background.primary};
+  color: ${theme.colors.text.primary};
   font-family: 'Inter', sans-serif;
 `;
 
@@ -17,7 +60,7 @@ const Navbar = styled.nav`
   right: 0;
   background: rgba(15, 15, 35, 0.95);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid ${theme.colors.border};
   padding: 1rem 0;
   z-index: 1000;
 `;
@@ -25,10 +68,14 @@ const Navbar = styled.nav`
 const NavContent = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+  @media (min-width: ${theme.breakpoints.md}) {
+    padding: 0 2rem;
+  }
 `;
 
 const Logo = styled.div`
@@ -40,213 +87,135 @@ const Logo = styled.div`
 `;
 
 const LogoIcon = styled.div`
-  width: 45px;
-  height: 45px;
-  background: linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  width: 40px;
+  height: 40px;
+  background: ${theme.gradients.primary};
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-  
-  &::before {
-    content: '';
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-`;
-
-const LogoText = styled.span`
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 800;
-  letter-spacing: -0.5px;
 `;
 
 const BackButton = styled(Link)`
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
-  color: #e2e8f0;
+  color: ${theme.colors.text.secondary};
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  padding: 8px 16px;
+  border-radius: ${theme.borderRadius.md};
+  transition: all ${theme.transitions.default};
   
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    color: ${theme.colors.text.primary};
+    background: rgba(255, 255, 255, 0.05);
   }
 `;
 
-const HeroSection = styled.div`
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d1b69 100%);
+const Container = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  
+  @media (min-width: ${theme.breakpoints.md}) {
+    padding: 0 2rem;
+  }
+`;
+
+const HeroSection = styled.section`
   padding: 120px 0 80px;
   text-align: center;
 `;
 
-const HeroContent = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-
-  h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    line-height: 1.1;
-  }
-
-  .subtitle {
-    font-size: 1.25rem;
-    color: #94a3b8;
-    line-height: 1.6;
-  }
-
-  @media (max-width: 768px) {
-    h1 {
-      font-size: 2.5rem;
-    }
+const Title = styled.h1`
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: ${theme.gradients.primary};
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  @media (min-width: ${theme.breakpoints.md}) {
+    font-size: 4rem;
   }
 `;
 
-const ContentSection = styled.div`
-  padding: 80px 0;
-  background: linear-gradient(135deg, #1a1a3e 0%, #0f0f23 100%);
-`;
-
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 4rem;
-`;
-
-const Card = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 2rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(20px);
-
-  &:hover {
-    transform: translateY(-5px);
-    border-color: rgba(102, 126, 234, 0.3);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  }
-`;
-
-const CardIcon = styled.div`
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-`;
-
-const CardTitle = styled.h3`
+const Subtitle = styled.p`
   font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: white;
+  color: ${theme.colors.text.secondary};
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
+  
+  @media (min-width: ${theme.breakpoints.md}) {
+    font-size: 1.5rem;
+  }
 `;
 
-const CardDescription = styled.p`
-  color: #94a3b8;
-  line-height: 1.6;
+const ContentSection = styled.section`
+  padding: 2rem 0 4rem;
+`;
+
+const ContentCard = styled.div`
+  background: ${theme.colors.background.card};
+  border: 1px solid ${theme.colors.border};
+  border-radius: ${theme.borderRadius.xl};
+  padding: 2rem;
+  margin-bottom: 2rem;
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 2rem;
-  text-align: center;
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-`;
-
-const StorySection = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  padding: 3rem;
-  margin: 3rem 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-`;
-
-const StoryContent = styled.div`
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #e2e8f0;
-  
-  p {
-    margin-bottom: 1.5rem;
-  }
-  
-  .highlight {
-    color: #a5b4fc;
-    font-weight: 600;
-  }
-`;
-
-const TeamSection = styled.div`
-  text-align: center;
-  margin-top: 4rem;
-`;
-
-const TeamGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-`;
-
-const TeamCard = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-`;
-
-const TeamName = styled.h4`
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: white;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  color: ${theme.colors.text.primary};
 `;
 
-const TeamRole = styled.p`
-  color: #a5b4fc;
-  font-weight: 500;
+const Text = styled.p`
+  color: ${theme.colors.text.secondary};
+  line-height: 1.6;
   margin-bottom: 1rem;
 `;
 
-const TeamDescription = styled.p`
-  color: #94a3b8;
+const FeatureGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  
+  @media (min-width: ${theme.breakpoints.md}) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+`;
+
+const FeatureCard = styled.div`
+  background: ${theme.colors.background.card};
+  border: 1px solid ${theme.colors.border};
+  border-radius: ${theme.borderRadius.lg};
+  padding: 1.5rem;
+  text-align: center;
+`;
+
+const FeatureIcon = styled.div`
+  width: 50px;
+  height: 50px;
+  background: ${theme.gradients.primary};
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+`;
+
+const FeatureTitle = styled.h3`
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: ${theme.colors.text.primary};
+`;
+
+const FeatureText = styled.p`
+  color: ${theme.colors.text.secondary};
   font-size: 0.9rem;
   line-height: 1.5;
 `;
@@ -258,159 +227,80 @@ const About = () => {
         <NavContent>
           <Logo>
             <LogoIcon>
-              <BookOpen size={22} color="white" />
+              <BookOpen size={24} color="white" />
             </LogoIcon>
-            <LogoText>NoteNexus</LogoText>
+            NoteNexus
           </Logo>
           <BackButton to="/">
-            <ArrowLeft size={18} />
+            <ArrowLeft size={20} />
             Back to Home
           </BackButton>
         </NavContent>
       </Navbar>
 
       <HeroSection>
-        <HeroContent>
-          <h1>About NoteNexus</h1>
-          <p className="subtitle">
-            Revolutionizing how students share knowledge and collaborate in their academic journey. 
-            Built by students, for students.
-          </p>
-        </HeroContent>
+        <Container>
+          <Title>About NoteNexus</Title>
+          <Subtitle>
+            A simple platform where students can share and discover study materials
+          </Subtitle>
+        </Container>
       </HeroSection>
 
       <ContentSection>
         <Container>
-          <SectionTitle>Our Mission</SectionTitle>
-          <Grid>
-            <Card>
-              <CardIcon>
-                <Target size={30} />
-              </CardIcon>
-              <CardTitle>Democratize Education</CardTitle>
-              <CardDescription>
-                Making quality educational resources accessible to every student, 
-                regardless of their background or financial situation.
-              </CardDescription>
-            </Card>
+          <ContentCard>
+            <SectionTitle>What is NoteNexus?</SectionTitle>
+            <Text>
+              NoteNexus is a growing online platform designed for students who want to share their study materials 
+              and learn from others. We believe that knowledge sharing makes education better for everyone.
+            </Text>
+            <Text>
+              Whether you're looking for notes on a specific topic or want to help other students by sharing 
+              your own materials, NoteNexus provides a simple and organized way to do it.
+            </Text>
+          </ContentCard>
 
-            <Card>
-              <CardIcon>
-                <Users size={30} />
-              </CardIcon>
-              <CardTitle>Build Community</CardTitle>
-              <CardDescription>
-                Creating a supportive ecosystem where students help each other succeed 
-                through knowledge sharing and collaboration.
-              </CardDescription>
-            </Card>
+          <ContentCard>
+            <SectionTitle>Our Mission</SectionTitle>
+            <Text>
+              To create a supportive community where students can easily share knowledge, collaborate on studies, 
+              and help each other succeed academically. We focus on building a platform that's simple to use 
+              and genuinely helpful for students.
+            </Text>
+          </ContentCard>
 
-            <Card>
-              <CardIcon>
-                <Award size={30} />
-              </CardIcon>
-              <CardTitle>Ensure Quality</CardTitle>
-              <CardDescription>
-                Maintaining high standards for all shared content through community 
-                verification and expert review processes.
-              </CardDescription>
-            </Card>
-          </Grid>
-
-          <StorySection>
-            <SectionTitle>Our Story</SectionTitle>
-            <StoryContent>
-              <p>
-                NoteNexus was born from a simple observation: <span className="highlight">students were struggling to access quality study materials</span> 
-                and often felt isolated in their academic journey. As college students ourselves, we experienced firsthand 
-                the challenges of finding reliable notes, understanding complex topics, and preparing for exams.
-              </p>
-              <p>
-                We realized that <span className="highlight">every student has something valuable to contribute</span> - whether it's 
-                well-organized lecture notes, creative study guides, or insightful explanations of difficult concepts. 
-                The problem wasn't a lack of knowledge, but rather the absence of a platform to connect students 
-                and facilitate seamless knowledge sharing.
-              </p>
-              <p>
-                That's when we decided to build NoteNexus - <span className="highlight">a comprehensive platform where students can upload, 
-                share, and access educational resources</span> from peers across different universities and courses. 
-                Our goal is to create a vibrant academic community where collaboration leads to collective success.
-              </p>
-              <p>
-                Today, NoteNexus serves students from multiple universities, offering a diverse collection of 
-                notes, study guides, and educational materials. <span className="highlight">We're not just a file-sharing platform; 
-                we're building the future of collaborative learning.</span>
-              </p>
-            </StoryContent>
-          </StorySection>
-
-          <SectionTitle>Core Values</SectionTitle>
-          <Grid>
-            <Card>
-              <CardIcon>
-                <Heart size={30} />
-              </CardIcon>
-              <CardTitle>Student-First</CardTitle>
-              <CardDescription>
-                Every decision we make prioritizes the needs and success of students. 
-                We listen to feedback and continuously improve based on your experiences.
-              </CardDescription>
-            </Card>
-
-            <Card>
-              <CardIcon>
-                <Globe size={30} />
-              </CardIcon>
-              <CardTitle>Accessibility</CardTitle>
-              <CardDescription>
-                Knowledge should have no barriers. We're committed to making our platform 
-                accessible to students worldwide, regardless of their circumstances.
-              </CardDescription>
-            </Card>
-
-            <Card>
-              <CardIcon>
-                <BookOpen size={30} />
-              </CardIcon>
-              <CardTitle>Academic Integrity</CardTitle>
-              <CardDescription>
-                We promote ethical learning practices and respect for intellectual property 
-                while fostering a culture of honest academic collaboration.
-              </CardDescription>
-            </Card>
-          </Grid>
-
-          <TeamSection>
-            <SectionTitle>The Team Behind NoteNexus</SectionTitle>
-            <TeamGrid>
-              <TeamCard>
-                <TeamName>Development Team</TeamName>
-                <TeamRole>Full-Stack Developers</TeamRole>
-                <TeamDescription>
-                  Passionate developers committed to building a robust, scalable platform 
-                  that serves the academic community with cutting-edge technology.
-                </TeamDescription>
-              </TeamCard>
-
-              <TeamCard>
-                <TeamName>Student Community</TeamName>
-                <TeamRole>Beta Testers & Contributors</TeamRole>
-                <TeamDescription>
-                  Amazing students from various universities who provide feedback, 
-                  test features, and contribute high-quality educational content.
-                </TeamDescription>
-              </TeamCard>
-
-              <TeamCard>
-                <TeamName>Academic Advisors</TeamName>
-                <TeamRole>Education Experts</TeamRole>
-                <TeamDescription>
-                  Experienced educators who guide our content quality standards 
-                  and help ensure academic excellence across the platform.
-                </TeamDescription>
-              </TeamCard>
-            </TeamGrid>
-          </TeamSection>
+          <FeatureGrid>
+            <FeatureCard>
+              <FeatureIcon>
+                <Share size={24} color="white" />
+              </FeatureIcon>
+              <FeatureTitle>Share Knowledge</FeatureTitle>
+              <FeatureText>
+                Upload your study notes and help fellow students learn from your work.
+              </FeatureText>
+            </FeatureCard>
+            
+            <FeatureCard>
+              <FeatureIcon>
+                <Download size={24} color="white" />
+              </FeatureIcon>
+              <FeatureTitle>Access Materials</FeatureTitle>
+              <FeatureText>
+                Download study materials shared by other students across various subjects.
+              </FeatureText>
+            </FeatureCard>
+            
+            <FeatureCard>
+              <FeatureIcon>
+                <Heart size={24} color="white" />
+              </FeatureIcon>
+              <FeatureTitle>Support Community</FeatureTitle>
+              <FeatureText>
+                Be part of a growing community that values collaboration and mutual support.
+              </FeatureText>
+            </FeatureCard>
+          </FeatureGrid>
         </Container>
       </ContentSection>
     </AboutContainer>

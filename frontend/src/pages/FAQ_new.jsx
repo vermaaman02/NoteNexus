@@ -241,39 +241,43 @@ const FAQ = () => {
   const faqData = [
     {
       question: "What is NoteNexus?",
-      answer: "NoteNexus is a simple platform where students can share study notes and find materials uploaded by other students. It's designed to help students collaborate and learn from each other."
+      answer: "NoteNexus is a collaborative learning platform where students can share and access high-quality study materials, notes, and educational resources across various subjects and academic levels."
     },
     {
       question: "How do I create an account?",
-      answer: "Click the 'Sign Up' button, enter your name, email, and create a password. Once you verify your email, you can start using the platform."
+      answer: "Simply click on the 'Sign Up' button on our homepage, fill in your details including your name, email, and password, and you'll be ready to start exploring our vast library of educational content."
     },
     {
-      question: "Is it free to use?",
-      answer: "Yes, NoteNexus is completely free for all students. You can upload notes, download materials, and access all features without any cost."
+      question: "Is NoteNexus free to use?",
+      answer: "Yes! NoteNexus offers a comprehensive free tier that allows you to access thousands of notes and study materials. We also offer premium features for enhanced functionality and exclusive content."
     },
     {
-      question: "How do I upload my notes?",
-      answer: "After logging in, click on 'Upload' and select your file. Add a title, subject, and brief description to help other students find your notes."
+      question: "How can I upload my own notes?",
+      answer: "After creating an account and logging in, navigate to the 'Upload' section where you can easily share your notes with the community. All uploads are reviewed to ensure quality and accuracy."
     },
     {
-      question: "What file types can I upload?",
-      answer: "You can upload PDF files, Word documents, PowerPoint presentations, and images (JPG, PNG). Most common study file formats are supported."
+      question: "What file formats are supported?",
+      answer: "We support various file formats including PDF, DOCX, PPTX, and images (JPG, PNG). All files are processed to ensure optimal viewing and downloading experience for all users."
     },
     {
-      question: "How do I find specific notes?",
-      answer: "Use the search bar to look for topics, subjects, or keywords. You can also browse by categories or use filters to narrow down results."
+      question: "How do I search for specific topics?",
+      answer: "Use our advanced search feature to find notes by subject, topic, university, or keywords. You can also filter results by file type, upload date, and user ratings to find exactly what you need."
     },
     {
-      question: "Can I download notes?",
-      answer: "Yes, you can download any notes shared on the platform. Just click the download button on the note you want to save to your device."
+      question: "Can I download notes for offline use?",
+      answer: "Absolutely! All notes on NoteNexus can be downloaded for offline studying. Simply click the download button on any note, and it will be saved to your device for convenient access anytime."
     },
     {
-      question: "Do you check uploaded content?",
-      answer: "We review uploaded content to ensure it's appropriate and helpful for students. This helps maintain a quality learning environment for everyone."
+      question: "How do you ensure content quality?",
+      answer: "We have a dedicated review team that verifies all uploaded content. Additionally, our community rating system helps identify the most helpful and accurate materials, ensuring you get the best study resources."
     },
     {
-      question: "How do I contact support?",
-      answer: "If you need help, you can contact us through the support email or use the contact form on our website. We'll get back to you as soon as possible."
+      question: "Is my personal information secure?",
+      answer: "Yes, we take privacy seriously. All personal information is encrypted and stored securely. We never share your data with third parties without your explicit consent, and you have full control over your privacy settings."
+    },
+    {
+      question: "How can I contact support?",
+      answer: "You can reach our support team through the contact form on our website, send us an email at support@notenexus.com, or use the live chat feature available on our platform during business hours."
     }
   ];
 
