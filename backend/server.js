@@ -14,13 +14,19 @@ app.use(cors({
   origin: [
     'http://localhost:3000', // For local development
     'http://localhost:5000', // Frontend dev server
-    'https://notenexus.vercel.app', // Your Vercel deployment URLs
+    'https://notenexus.vercel.app',
     'https://note-nexus.vercel.app',
     'https://notenexus-frontend.vercel.app',
-    'https://frontend-cil5gigld-aman-vermas-projects-eb493b68.vercel.app', // Previous deployment
-    'https://note-nexus-git-main-aman-vermas-projects-eb493b68.vercel.app', // Previous deployment
-    'https://note-nexus-seven.vercel.app', // Current deployment
-    'https://*.vercel.app' // Allow all Vercel domains
+    'https://frontend-cil5gigld-aman-vermas-projects-eb493b68.vercel.app',
+    'https://note-nexus-git-main-aman-vermas-projects-eb493b68.vercel.app',
+    'https://note-nexus-seven.vercel.app',
+    // Add more specific Vercel domains as needed without using wildcards
+    'https://notenexus-git-main-vermaaman02.vercel.app',
+    'https://notenexus-vermaaman02.vercel.app',
+    'https://notenexus-eight.vercel.app',
+    'https://notenexus-alpha.vercel.app',
+    'https://notenexus-beta.vercel.app',
+    'https://note-nexus-one.vercel.app'
   ],
   credentials: true
 }));
