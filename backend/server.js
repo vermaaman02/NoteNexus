@@ -13,6 +13,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000', // For local development
+    'http://localhost:5002', // Frontend dev server
     'https://notenexus.vercel.app', // Your Vercel deployment URLs
     'https://note-nexus.vercel.app',
     'https://notenexus-frontend.vercel.app',

@@ -1,18 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider } from './context/AuthContext';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import About from './pages/About';
-import FAQ from './pages/FAQ';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import Upload from './pages/Upload';
-import Profile from './pages/Profile';
-import NoteDetail from './pages/NoteDetail';
-import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext.jsx';
+import Navbar from './components/Navbar.jsx';
+import Home from './pages/Home.jsx';
+import About from './pages/About.jsx';
+import FAQ from './pages/FAQ.jsx';
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import UploadPage from './pages/Upload.jsx';
+import Profile from './pages/Profile.jsx';
+import NoteDetail from './pages/NoteDetail.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 import './App.css';
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
                 path="/upload"
                 element={
                   <ProtectedRoute>
-                    <Upload />
+                    <UploadPage />
                   </ProtectedRoute>
                 }
               />

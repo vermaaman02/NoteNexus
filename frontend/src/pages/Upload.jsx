@@ -18,9 +18,7 @@ const Container = styled.div`
 `;
 
 const UploadCard = styled.div`
-  background                    <UploadIcon>
-                      <Upload size={48} />
-                    </UploadIcon>hite;
+  background: white;
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -392,7 +390,11 @@ const UploadPage = () => {
       toast.success('Note uploaded successfully!');
       navigate('/dashboard');
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to upload note');
+      console.error('Upload error:', error);
+      const errorMessage = error.response?.data?.message || 
+                          error.response?.data?.errors || 
+                          'Failed to upload note. Please try again.';
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
