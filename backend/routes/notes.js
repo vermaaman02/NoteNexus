@@ -12,12 +12,43 @@ const router = express.Router();
 // @route   POST /api/notes/upload
 // @desc    Upload a new note
 // @access  Private
-router.post('/upload', auth, upload.single('noteFile'), [
+router.post('/upload', (req, res, next) => {
+  // Auth middleware
+  auth(req, res, (authErr) => {
+    if (authErr) return next(authErr);
+    
+    // Upload middleware with error handling
+    upload.single('noteFile')(req, res, (uploadErr) => {
+      if (uploadErr) {
+        console.error('Upload middleware error:', uploadErr);
+        if (uploadErr.code === 'LIMIT_FILE_SIZE') {
+          return res.status(400).json({ message: 'File too large. Maximum size is 10MB.' });
+        }
+        if (uploadErr.message.includes('Only PDF')) {
+          return res.status(400).json({ message: uploadErr.message });
+        }
+        return res.status(500).json({ message: 'File upload error: ' + uploadErr.message });
+      }
+      next();
+    });
+  });
+}, [
   body('title').notEmpty().withMessage('Title is required'),
   body('subject').notEmpty().withMessage('Subject is required'),
   body('course').notEmpty().withMessage('Course is required')
 ], async (req, res) => {
   try {
+    console.log('Upload request received');
+    console.log('Request body:', req.body);
+    console.log('Request file:', req.file);
+    console.log('User:', req.user?._id);
+
+    // Ensure uploads directory exists
+    const uploadsDir = path.join(__dirname, '..', 'uploads');
+    if (!fs.existsSync(uploadsDir)) {
+      console.log('Creating uploads directory...');
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
     // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

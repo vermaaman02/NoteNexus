@@ -27,6 +27,15 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Request logging
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`, {
+    body: req.method === 'POST' ? req.body : undefined,
+    headers: req.headers.authorization ? 'Auth header present' : 'No auth header'
+  });
+  next();
+});
+
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -38,6 +47,40 @@ app.use('/api/users', require('./routes/users'));
 // Health check route
 app.get('/api/health', (req, res) => {
   res.json({ message: 'NoteNexus Backend is running!', status: 'OK' });
+});
+
+// Global error handler
+app.use((error, req, res, next) => {
+  console.error('Global error handler:', error);
+  
+  // Multer errors
+  if (error.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({ message: 'File too large. Maximum size is 10MB.' });
+  }
+  
+  if (error.message && error.message.includes('Only PDF')) {
+    return res.status(400).json({ message: error.message });
+  }
+  
+  // JWT errors
+  if (error.name === 'JsonWebTokenError') {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
+  
+  if (error.name === 'TokenExpiredError') {
+    return res.status(401).json({ message: 'Token expired' });
+  }
+  
+  // Default error
+  res.status(500).json({ 
+    message: 'Internal server error',
+    error: process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'
+  });
+});
+
+// 404 handler
+app.use('*', (req, res) => {
+  res.status(404).json({ message: 'Route not found' });
 });
 
 // Connect to MongoDB
