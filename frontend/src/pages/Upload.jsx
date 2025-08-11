@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { notesService } from '../services/api.js';
-import { Upload, FileText, X, Plus } from 'lucide-react';
+import { Upload, FileText, X } from 'lucide-react';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 
@@ -107,16 +107,6 @@ const Select = styled.select`
   }
 `;
 
-const Row = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
 const FileUploadArea = styled.div`
   border: 2px dashed #d1d5db;
   border-radius: 8px;
@@ -195,49 +185,6 @@ const RemoveButton = styled.button`
   }
 `;
 
-const TagsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-`;
-
-const Tag = styled.span`
-  background: #e0e7ff;
-  color: #667eea;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-`;
-
-const TagInput = styled.input`
-  padding: 0.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  flex: 1;
-`;
-
-const AddTagButton = styled.button`
-  padding: 0.5rem 1rem;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-
-  &:hover {
-    background: #5a6fd8;
-  }
-`;
-
 const SubmitButton = styled.button`
   padding: 1rem 2rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -268,20 +215,44 @@ const ErrorMessage = styled.div`
 const UploadPage = () => {
   const [formData, setFormData] = useState({
     title: '',
-    description: '',
     subject: '',
-    course: '',
-    semester: '',
-    college: ''
+    course: ''
   });
   const [file, setFile] = useState(null);
-  const [tags, setTags] = useState([]);
-  const [currentTag, setCurrentTag] = useState('');
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
 
   const navigate = useNavigate();
+
+  // Computer Science subjects
+  const csSubjects = [
+    'Data Structures and Algorithms',
+    'Database Management Systems',
+    'Operating Systems',
+    'Computer Networks',
+    'Software Engineering',
+    'Object Oriented Programming',
+    'Web Development',
+    'Machine Learning',
+    'Artificial Intelligence',
+    'Computer Graphics',
+    'Cyber Security',
+    'Cloud Computing',
+    'Mobile App Development',
+    'Compiler Design',
+    'Theory of Computation',
+    'Discrete Mathematics',
+    'Computer Architecture',
+    'Human Computer Interaction',
+    'Data Mining',
+    'Internet of Things (IoT)',
+    'Blockchain Technology',
+    'Digital Image Processing',
+    'Natural Language Processing',
+    'Distributed Systems',
+    'Information Systems'
+  ];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -337,26 +308,12 @@ const UploadPage = () => {
     setErrors(prev => ({ ...prev, file: '' }));
   };
 
-  const addTag = () => {
-    if (currentTag.trim() && !tags.includes(currentTag.trim())) {
-      setTags(prev => [...prev, currentTag.trim()]);
-      setCurrentTag('');
-    }
-  };
-
-  const removeTag = (tagToRemove) => {
-    setTags(prev => prev.filter(tag => tag !== tagToRemove));
-  };
-
   const validateForm = () => {
     const newErrors = {};
 
     if (!formData.title.trim()) newErrors.title = 'Title is required';
-    if (!formData.description.trim()) newErrors.description = 'Description is required';
     if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
     if (!formData.course.trim()) newErrors.course = 'Course is required';
-    if (!formData.semester) newErrors.semester = 'Semester is required';
-    if (!formData.college.trim()) newErrors.college = 'College is required';
     if (!file) newErrors.file = 'Please select a file to upload';
 
     setErrors(newErrors);
@@ -373,17 +330,17 @@ const UploadPage = () => {
       const uploadData = new FormData();
       
       // Append form data
-      Object.keys(formData).forEach(key => {
-        uploadData.append(key, formData[key]);
-      });
+      uploadData.append('title', formData.title);
+      uploadData.append('subject', formData.subject);
+      uploadData.append('course', formData.course);
+      
+      // Add default values for required backend fields
+      uploadData.append('description', `Notes for ${formData.subject}`);
+      uploadData.append('semester', '1');
+      uploadData.append('college', 'Computer Science Department');
       
       // Append file
       uploadData.append('noteFile', file);
-      
-      // Append tags
-      if (tags.length > 0) {
-        uploadData.append('tags', tags.join(','));
-      }
 
       await notesService.uploadNote(uploadData);
       
@@ -434,99 +391,40 @@ const UploadPage = () => {
             </FormGroup>
 
             <FormGroup>
-              <Label>Description *</Label>
-              <TextArea
-                name="description"
-                value={formData.description}
+              <Label>Subject *</Label>
+              <Select
+                name="subject"
+                value={formData.subject}
                 onChange={handleInputChange}
-                placeholder="Describe what this note covers"
-                className={errors.description ? 'error' : ''}
-              />
-              {errors.description && <ErrorMessage>{errors.description}</ErrorMessage>}
+                className={errors.subject ? 'error' : ''}
+              >
+                <option value="">Select Subject</option>
+                {csSubjects.map((subject, index) => (
+                  <option key={index} value={subject}>{subject}</option>
+                ))}
+              </Select>
+              {errors.subject && <ErrorMessage>{errors.subject}</ErrorMessage>}
             </FormGroup>
 
-            <Row>
-              <FormGroup>
-                <Label>Subject *</Label>
-                <Input
-                  type="text"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  placeholder="e.g., Mathematics, Physics"
-                  className={errors.subject ? 'error' : ''}
-                />
-                {errors.subject && <ErrorMessage>{errors.subject}</ErrorMessage>}
-              </FormGroup>
-
-              <FormGroup>
-                <Label>Course *</Label>
-                <Input
-                  type="text"
-                  name="course"
-                  value={formData.course}
-                  onChange={handleInputChange}
-                  placeholder="e.g., Computer Science"
-                  className={errors.course ? 'error' : ''}
-                />
-                {errors.course && <ErrorMessage>{errors.course}</ErrorMessage>}
-              </FormGroup>
-            </Row>
-
-            <Row>
-              <FormGroup>
-                <Label>Semester *</Label>
-                <Select
-                  name="semester"
-                  value={formData.semester}
-                  onChange={handleInputChange}
-                  className={errors.semester ? 'error' : ''}
-                >
-                  <option value="">Select Semester</option>
-                  {[1,2,3,4,5,6,7,8].map(sem => (
-                    <option key={sem} value={sem}>Semester {sem}</option>
-                  ))}
-                </Select>
-                {errors.semester && <ErrorMessage>{errors.semester}</ErrorMessage>}
-              </FormGroup>
-
-              <FormGroup>
-                <Label>College *</Label>
-                <Input
-                  type="text"
-                  name="college"
-                  value={formData.college}
-                  onChange={handleInputChange}
-                  placeholder="College/University name"
-                  className={errors.college ? 'error' : ''}
-                />
-                {errors.college && <ErrorMessage>{errors.college}</ErrorMessage>}
-              </FormGroup>
-            </Row>
-
             <FormGroup>
-              <Label>Tags (Optional)</Label>
-              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <TagInput
-                  type="text"
-                  value={currentTag}
-                  onChange={(e) => setCurrentTag(e.target.value)}
-                  placeholder="Add a tag"
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
-                />
-                <AddTagButton type="button" onClick={addTag}>
-                  <Plus size={16} />
-                  Add
-                </AddTagButton>
-              </div>
-              <TagsContainer>
-                {tags.map((tag, index) => (
-                  <Tag key={index}>
-                    {tag}
-                    <X size={14} style={{ cursor: 'pointer' }} onClick={() => removeTag(tag)} />
-                  </Tag>
-                ))}
-              </TagsContainer>
+              <Label>Course *</Label>
+              <Select
+                name="course"
+                value={formData.course}
+                onChange={handleInputChange}
+                className={errors.course ? 'error' : ''}
+              >
+                <option value="">Select Course</option>
+                <option value="Bachelor of Computer Science">Bachelor of Computer Science</option>
+                <option value="Bachelor of Technology (Computer Science)">Bachelor of Technology (Computer Science)</option>
+                <option value="Master of Computer Science">Master of Computer Science</option>
+                <option value="Master of Technology (Computer Science)">Master of Technology (Computer Science)</option>
+                <option value="Bachelor of Computer Applications">Bachelor of Computer Applications</option>
+                <option value="Master of Computer Applications">Master of Computer Applications</option>
+                <option value="Diploma in Computer Science">Diploma in Computer Science</option>
+                <option value="PhD in Computer Science">PhD in Computer Science</option>
+              </Select>
+              {errors.course && <ErrorMessage>{errors.course}</ErrorMessage>}
             </FormGroup>
 
             <FormGroup>

@@ -14,16 +14,14 @@ const router = express.Router();
 // @access  Private
 router.post('/upload', auth, upload.single('noteFile'), [
   body('title').notEmpty().withMessage('Title is required'),
-  body('description').notEmpty().withMessage('Description is required'),
   body('subject').notEmpty().withMessage('Subject is required'),
-  body('course').notEmpty().withMessage('Course is required'),
-  body('semester').isInt({ min: 1, max: 10 }).withMessage('Semester must be between 1 and 10'),
-  body('college').notEmpty().withMessage('College is required')
+  body('course').notEmpty().withMessage('Course is required')
 ], async (req, res) => {
   try {
     // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log('Validation errors:', errors.array());
       return res.status(400).json({ 
         message: 'Validation failed', 
         errors: errors.array().map(err => err.msg).join(', ')
@@ -34,30 +32,33 @@ router.post('/upload', auth, upload.single('noteFile'), [
       return res.status(400).json({ message: 'Please upload a file' });
     }
 
-    const { title, description, subject, course, semester, college, tags } = req.body;
+    const { title, subject, course, description, semester, college, tags } = req.body;
+
+    // Provide defaults for optional fields
+    const noteData = {
+      title: title.trim(),
+      subject: subject.trim(),
+      course: course.trim(),
+      description: description || `Notes for ${subject}`,
+      semester: semester ? parseInt(semester) : 1,
+      college: college || 'Computer Science Department',
+      fileUrl: `/uploads/${req.file.filename}`,
+      fileName: req.file.originalname,
+      fileSize: req.file.size,
+      fileType: path.extname(req.file.originalname),
+      uploadedBy: req.user._id
+    };
 
     // Parse tags if provided
     let parsedTags = [];
     if (tags) {
       parsedTags = typeof tags === 'string' ? tags.split(',').map(tag => tag.trim()) : tags;
+      noteData.tags = parsedTags;
     }
-
     // Create new note
-    const note = new Note({
-      title,
-      description,
-      subject,
-      course,
-      semester: parseInt(semester),
-      college,
-      fileUrl: `/uploads/${req.file.filename}`,
-      fileName: req.file.originalname,
-      fileSize: req.file.size,
-      fileType: path.extname(req.file.originalname),
-      uploadedBy: req.user._id,
-      tags: parsedTags
-    });
+    const note = new Note(noteData);
 
+    console.log('Creating note with data:', noteData);
     await note.save();
 
     // Add note to user's uploaded notes
@@ -74,11 +75,31 @@ router.post('/upload', auth, upload.single('noteFile'), [
     });
   } catch (error) {
     console.error('Note upload error:', error);
+    console.error('Request body:', req.body);
+    console.error('Request file:', req.file);
+    console.error('User:', req.user?._id);
+    
     // Delete uploaded file if note creation fails
     if (req.file) {
-      fs.unlinkSync(req.file.path);
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (fileError) {
+        console.error('Error deleting file:', fileError);
+      }
     }
-    res.status(500).json({ message: 'Server error during note upload' });
+    
+    // Send specific error message
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ 
+        message: 'Validation failed', 
+        errors: Object.values(error.errors).map(e => e.message).join(', ')
+      });
+    }
+    
+    res.status(500).json({ 
+      message: 'Server error during note upload',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
   }
 });
 
