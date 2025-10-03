@@ -14,13 +14,17 @@ app.use(cors({
   origin: [
     'http://localhost:3000', // For local development
     'http://localhost:5000', // Frontend dev server
+    // Azure Web App domains
+    'https://notenexus-app.azurewebsites.net',
+    'https://notenexus-backend.azurewebsites.net',
+    'https://notenexus-frontend.azurestaticapps.net',
+    // Vercel domains (keep existing)
     'https://notenexus.vercel.app',
     'https://note-nexus.vercel.app',
     'https://notenexus-frontend.vercel.app',
     'https://frontend-cil5gigld-aman-vermas-projects-eb493b68.vercel.app',
     'https://note-nexus-git-main-aman-vermas-projects-eb493b68.vercel.app',
     'https://note-nexus-seven.vercel.app',
-    // Add more specific Vercel domains as needed without using wildcards
     'https://notenexus-git-main-vermaaman02.vercel.app',
     'https://notenexus-vermaaman02.vercel.app',
     'https://notenexus-eight.vercel.app',
@@ -49,6 +53,11 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/notes', require('./routes/notes'));
 app.use('/api/users', require('./routes/users'));
+
+// Serve static files from React app build (for production deployment)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+}
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -84,10 +93,17 @@ app.use((error, req, res, next) => {
   });
 });
 
-// 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({ message: 'Route not found' });
-});
+// Catch all handler: send back React's index.html file for production
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+  });
+} else {
+  // 404 handler for development
+  app.use('*', (req, res) => {
+    res.status(404).json({ message: 'Route not found' });
+  });
+}
 
 // Connect to MongoDB
 const connectDB = async () => {
