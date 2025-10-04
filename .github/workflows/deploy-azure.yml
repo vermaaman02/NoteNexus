@@ -1,0 +1,58 @@
+name: Deploy NoteNexus to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: |
+          backend/package-lock.json
+          frontend/package-lock.json
+          
+    - name: Install backend dependencies
+      run: |
+        cd backend
+        npm ci
+        
+    - name: Install frontend dependencies
+      run: |
+        cd frontend
+        npm ci
+        
+    - name: Build frontend
+      run: |
+        cd frontend
+        CI=false DISABLE_ESLINT_PLUGIN=true npm run build:prod
+        
+    - name: Create deployment package
+      run: |
+        # Copy built frontend to backend public folder
+        mkdir -p backend/public
+        cp -r frontend/build/* backend/public/
+        
+        # Create deployment zip
+        cd backend
+        zip -r ../deployment.zip . -x "node_modules/*" ".env"
+        
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: 'notenexus-gqc6afa2abdgczgh'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: './deployment.zip'
+        clean: true
+        restart: true
