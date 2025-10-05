@@ -14,19 +14,22 @@ app.use(cors({
   origin: [
     'http://localhost:3000', // For local development
     'http://localhost:5000', // Frontend dev server
-    // Azure Web App domains
-    'https://notenexus-app.azurewebsites.net',
-    'https://notenexus-backend.azurewebsites.net',
-    'https://notenexus-frontend.azurestaticapps.net',
-    // Vercel domains (keep existing)
+    // Render backend (for self-requests)
+    'https://notenexus-backend.onrender.com',
+    // Vercel frontend domains (update these with your actual Vercel URLs)
     'https://notenexus.vercel.app',
     'https://note-nexus.vercel.app',
     'https://notenexus-frontend.vercel.app',
+    'https://notenexus-git-main-vermaaman02.vercel.app',
+    'https://notenexus-vermaaman02.vercel.app',
+    // Azure Web App domains (keep for backup)
+    'https://notenexus-app.azurewebsites.net',
+    'https://notenexus-backend.azurewebsites.net',
+    'https://notenexus-frontend.azurestaticapps.net',
+    // Legacy Vercel domains
     'https://frontend-cil5gigld-aman-vermas-projects-eb493b68.vercel.app',
     'https://note-nexus-git-main-aman-vermas-projects-eb493b68.vercel.app',
     'https://note-nexus-seven.vercel.app',
-    'https://notenexus-git-main-vermaaman02.vercel.app',
-    'https://notenexus-vermaaman02.vercel.app',
     'https://notenexus-eight.vercel.app',
     'https://notenexus-alpha.vercel.app',
     'https://notenexus-beta.vercel.app',
