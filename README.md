@@ -5,7 +5,7 @@ A MERN stack application that allows college students to share, upload, and acce
 ## Features
 
 ### For Students:
-- **User Authentication**: Secure registration and login system
+- **User Authentication**: Secure registration and login system 
 - **Note Upload**: Upload notes in various formats (PDF, DOC, DOCX, PPT, PPTX, TXT, images)
 - **Note Discovery**: Browse and search notes by subject, course, semester, and college
 - **Download Notes**: Access notes uploaded by other students
